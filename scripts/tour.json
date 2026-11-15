@@ -1,0 +1,6 @@
+{"events": [
+  {"t": 0.90, "type": "tap", "key": "world-5"},
+  {"t": 1.90, "type": "tap", "key": "engage"},
+  {"t": 13.20, "type": "key", "name": "Enter"},
+  {"t": 23.50, "type": "mark", "name": "end"}
+]}

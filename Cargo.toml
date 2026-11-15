@@ -1,0 +1,32 @@
+[package]
+name = "voyager"
+version = "0.1.0"
+edition = "2024"
+description = "A space travel demo for the Rune UI framework. Fly the solar system at warp."
+license = "MIT"
+repository = "https://github.com/trondegil/voyager-deep-space-navigation"
+publish = false
+
+# Rune is pre-release: pin one `dev` revision for Rune and for every patch below.
+# `keys-overlay` keeps the headless tooling (`--snap`, `--script`, `--video`, `--keys`) in release builds.
+[dependencies]
+rune = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b", features = ["keys-overlay"] }
+rune-fx = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+rune-motion = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+wgpu = { version = "30", default-features = false, features = ["std", "parking_lot", "metal", "wgsl"] }
+bytemuck = { version = "1.25", features = ["derive"] }
+
+[target.'cfg(not(target_os = "macos"))'.dependencies]
+wgpu = { version = "30", default-features = false, features = ["vulkan", "dx12"] }
+
+# Cargo doesn't inherit a dependency's patches, so repeat Rune's here at the same revision.
+[patch.crates-io]
+winit = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+parley_engine = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+wgpu-hal = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+accesskit_windows = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+accesskit_macos = { git = "https://github.com/anomalyco/rune", rev = "e7f3ad9fba336e9c33a5f25bb96e1c3aa7e2771b" }
+
+[profile.release]
+codegen-units = 16
+incremental = true
